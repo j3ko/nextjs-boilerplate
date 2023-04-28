@@ -1,0 +1,44 @@
+{
+  "name": "nextjs-boilerplate",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . && prettier --check \"./**/*.{css,md,json,js}\" --config ./.prettierrc.json --loglevel warn",
+    "format": "eslint --fix . && prettier --write \"./**/*.{css,md,json,js}\" --config ./.prettierrc.json --loglevel warn",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "next": "13.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "zustand": "^4.3.7"
+  },
+  "devDependencies": {
+    "@types/node": "18.16.2",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.1",
+    "autoprefixer": "10.4.14",
+    "daisyui": "^2.51.6",
+    "eslint": "8.39.0",
+    "eslint-config-next": "13.3.1",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "git-branch-is": "^4.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "postcss": "8.4.23",
+    "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.2.7",
+    "tailwindcss": "3.3.2",
+    "typescript": "5.0.4"
+  },
+  "lint-staged": {
+    "./**/*.{less,css,md,json,js,jsx,ts,tsx}": [
+      "npm run format"
+    ]
+  }
+}
