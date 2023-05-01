@@ -1,4 +1,5 @@
 import { Inter } from 'next/font/google';
+import { Button, Stats } from 'react-daisyui';
 
 import useBoundStore from '@/store';
 
@@ -13,30 +14,30 @@ export default function Home() {
 
   return (
     <main className={`flex h-screen flex-col items-center space-y-4 p-24 ${inter.className}`}>
-      <div className="stats shadow">
-        <div className="stat">
-          <div className="stat-title">Total Bears</div>
-          <div className="stat-value">{bears}</div>
-        </div>
-      </div>
-      <button className="btn-primary btn w-64 rounded-full" onClick={addBear}>
+      <Stats className="shadow">
+        <Stats.Stat>
+          <Stats.Stat.Item variant="title">Total Bears</Stats.Stat.Item>
+          <Stats.Stat.Item variant="value">{bears}</Stats.Stat.Item>
+        </Stats.Stat>
+      </Stats>
+      <Button className="w-64 rounded-full" color="primary" onClick={addBear}>
         Add Bear
-      </button>
+      </Button>
 
-      <div className="stats shadow">
-        <div className="stat">
-          <div className="stat-title">Total Beets</div>
-          <div className="stat-value">{beets}</div>
-        </div>
-      </div>
-      <button className="btn-primary btn w-64 rounded-full" onClick={addBeet}>
+      <Stats className="shadow">
+        <Stats.Stat>
+          <Stats.Stat.Item variant="title">Total Beets</Stats.Stat.Item>
+          <Stats.Stat.Item variant="value">{beets}</Stats.Stat.Item>
+        </Stats.Stat>
+      </Stats>
+      <Button className="w-64 rounded-full" color="primary" onClick={addBeet}>
         Add Beet
-      </button>
+      </Button>
 
-      <button className="btn-primary btn flex w-64 flex-col rounded-full" onClick={logout}>
+      <Button className="flex w-64 flex-col rounded-full" color="primary" onClick={logout}>
         <div>Battlestar Galactica</div>
         <div className="text-[8px]">(aka. Reset)</div>
-      </button>
+      </Button>
     </main>
   );
 }
