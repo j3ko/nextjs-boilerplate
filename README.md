@@ -3,6 +3,7 @@ This is an opinionated [Next.js](https://nextjs.org/) boilerplate project with t
 - [zustand](https://github.com/pmndrs/zustand) (state management)
 - [tailwindcss](https://github.com/tailwindlabs/tailwindcss) (css framework)
 - [daisyui](https://daisyui.com/docs/install/) (css components)
+- [react-daisyui](https://github.com/daisyui/react-daisyui) (react components)
 - [eslint](https://github.com/eslint/eslint)/[prettier](https://github.com/prettier/prettier) (code style)
 - [release-please-action](https://github.com/google-github-actions/release-please-action) (automated versioning and changelog)
 
