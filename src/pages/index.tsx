@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google';
 import { Button, Stats } from 'react-daisyui';
-
+import { GiBearFace } from 'react-icons/gi';
 import useBoundStore from '@/store';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -20,7 +20,7 @@ export default function Home() {
           <Stats.Stat.Item variant="value">{bears}</Stats.Stat.Item>
         </Stats.Stat>
       </Stats>
-      <Button className="w-64 rounded-full" color="primary" onClick={addBear}>
+      <Button className="w-64 rounded-full" color="primary" onClick={addBear} startIcon={<GiBearFace></GiBearFace>}>
         Add Bear
       </Button>
 
