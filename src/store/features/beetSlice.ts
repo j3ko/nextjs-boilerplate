@@ -1,12 +1,12 @@
 import { StateCreator } from 'zustand';
 
-import { State } from '..';
+import { AppState } from '..';
 
 export interface BeetSlice {
   beets: number;
   addBeet: () => void;
 }
-const createBeetSlice: StateCreator<State, [], [], BeetSlice> = (set) => ({
+const createBeetSlice: StateCreator<AppState, [], [], BeetSlice> = (set) => ({
   beets: 0,
   addBeet: () => set((state) => ({ beets: (state.beets += 1) })),
 });

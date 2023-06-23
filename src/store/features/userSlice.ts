@@ -1,14 +1,16 @@
 import Router from 'next/router';
 import { StateCreator } from 'zustand';
 
-import useBoundStore, { State } from '..';
+import { AppState } from '..';
 
 export interface UserSlice {
+  nextJs: any,
   logout: () => void;
 }
-const createUserSlice: StateCreator<State, [], [], UserSlice> = () => ({
+const createUserSlice: StateCreator<AppState, [], [], UserSlice> = () => ({
+  nextJs: undefined,
   logout: () => {
-    useBoundStore.persist.clearStorage();
+    // useBoundStore.persist.clearStorage();
     Router.reload();
   },
 });
