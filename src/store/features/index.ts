@@ -1,7 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import bearReducer from './bearSlice';
-import beetReducer from './beetSlice';
-import userReducer from './userSlice';
+import { combineEpics } from 'redux-observable';
+import bearReducer from './bear';
+import beetReducer from './beet';
+import userReducer, { userEpic } from './user';
 
 export const rootReducer = combineReducers(
   {
@@ -10,3 +11,10 @@ export const rootReducer = combineReducers(
     user: userReducer,
   }
 );
+
+export const rootEpic = combineEpics(
+  userEpic
+  // add more epics here if needed
+);
+
+export type RootState = ReturnType<typeof rootReducer>;

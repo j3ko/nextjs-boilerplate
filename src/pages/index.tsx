@@ -1,7 +1,7 @@
-import { RootState } from '@/store';
-import { addBear } from '@/store/features/bearSlice';
-import { addBeet } from '@/store/features/beetSlice';
-import { logout } from '@/store/features/userSlice';
+import { RootState } from '@/store/features';
+import { addBear } from '@/store/features/bear';
+import { addBeet } from '@/store/features/beet';
+import { logout } from '@/store/features/user';
 import { Inter } from 'next/font/google';
 import { Button, Stats } from 'react-daisyui';
 import { GiBearFace, GiBeet, GiSpaceship } from 'react-icons/gi';
