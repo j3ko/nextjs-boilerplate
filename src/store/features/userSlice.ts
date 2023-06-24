@@ -1,16 +1,31 @@
+import { createSlice } from '@reduxjs/toolkit';
 import Router from 'next/router';
-import { StateCreator } from 'zustand';
+// import { StateCreator } from 'zustand';
 
-import useBoundStore, { State } from '..';
+// import useBoundStore, { State } from '..';
 
-export interface UserSlice {
-  logout: () => void;
-}
-const createUserSlice: StateCreator<State, [], [], UserSlice> = () => ({
-  logout: () => {
-    useBoundStore.persist.clearStorage();
-    Router.reload();
-  },
-});
+// export interface UserSlice {
+//   logout: () => void;
+// }
+// const createUserSlice: StateCreator<State, [], [], UserSlice> = () => ({
+//   logout: () => {
+//     useBoundStore.persist.clearStorage();
+//     Router.reload();
+//   },
+// });
 
-export default createUserSlice;
+// export default createUserSlice;
+
+
+// import { createSlice } from '@reduxjs/toolkit'
+
+export const userSlice = createSlice({
+  name: "user",
+  initialState: {},
+  reducers:{
+    addBeet: (state) => {
+      Router.reload();
+    },
+  }
+})
+

@@ -1,17 +1,19 @@
+import { persistor, store } from '@/store';
 import '@/styles/globals.css';
-
 import type { AppProps } from 'next/app';
-import { useEffect, useState } from 'react';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
-export default function App({ Component, pageProps }: AppProps) {
-  const [isHydrated, setIsHydrated] = useState(false);
 
-  // hacky fix for zustand persist issue:
-  // https://github.com/pmndrs/zustand/issues/1145#issuecomment-1304856686
-  // waiting for after first hydration
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
+const MyApp = ({ Component, pageProps }: AppProps) => {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Component {...pageProps} />
+      </PersistGate>
+    </Provider>
+  );
+};
 
-  return <>{isHydrated ? <Component {...pageProps} /> : <></>}</>;
-}
+export default MyApp;
+

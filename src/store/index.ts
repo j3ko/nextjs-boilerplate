@@ -1,23 +1,38 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { configureStore, createStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import { rootReducer } from './features';
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 
-import createBearSlice, { BearSlice } from './features/bearSlice';
-import createBeetSlice, { BeetSlice } from './features/beetSlice';
-import createUserSlice, { UserSlice } from './features/userSlice';
+const persistConfig = {
+  key: 'root',
+  storage,
+}
 
-export type State = BearSlice & BeetSlice & UserSlice;
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-const useBoundStore = create<State>()(
-  persist(
-    (...a) => ({
-      ...createBearSlice(...a),
-      ...createBeetSlice(...a),
-      ...createUserSlice(...a),
-    }),
-    {
-      name: 'app-store',
-    },
-  ),
-);
+// export const store = configureStore({
+//   reducer: persistedReducer,
+//   devTools: process.env.NODE_ENV !== 'production',
+// });
 
-export default useBoundStore;
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+    }
+  })
+});
+
+export const persistor = persistStore(store);
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch
+
+// export default () => {
+//   let store = createStore(persistedReducer)
+//   let persistor = persistStore(store)
+//   return { store, persistor }
+// }

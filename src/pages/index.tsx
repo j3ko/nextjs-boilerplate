@@ -1,17 +1,16 @@
+import { RootState } from '@/store';
+import { addBear } from '@/store/features/bearSlice';
 import { Inter } from 'next/font/google';
 import { Button, Stats } from 'react-daisyui';
 import { GiBearFace, GiBeet, GiSpaceship } from 'react-icons/gi';
-
-import useBoundStore from '@/store';
+import { useSelector, useDispatch } from 'react-redux'
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
-  const bears = useBoundStore((state) => state.bears);
-  const addBear = useBoundStore((state) => state.addBear);
-  const beets = useBoundStore((state) => state.beets);
-  const addBeet = useBoundStore((state) => state.addBeet);
-  const logout = useBoundStore((state) => state.logout);
+  const bears = useSelector((state: RootState) => state.bear.count);
+  const beets = useSelector((state: RootState) => state.bear);
+  const dispatch = useDispatch();
 
   return (
     <main className={`flex h-screen flex-col items-center space-y-4 p-24 ${inter.className}`}>
@@ -27,12 +26,12 @@ export default function Home() {
       <Button
         className="w-64 rounded-full"
         color="primary"
-        onClick={addBear}
+        onClick={() => dispatch(addBear())}
         startIcon={<GiBearFace></GiBearFace>}>
         Add Bear
       </Button>
 
-      <Stats className="shadow">
+      {/* <Stats className="shadow">
         <Stats.Stat>
           <Stats.Stat.Item variant="figure" className="text-accent">
             <GiBeet className="inline-block h-8 w-8 stroke-current"></GiBeet>
@@ -58,7 +57,7 @@ export default function Home() {
           <div>Battlestar Galactica</div>
           <div className="text-[8px]">(aka. Reset)</div>
         </div>
-      </Button>
+      </Button> */}
     </main>
   );
 }
