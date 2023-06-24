@@ -1,31 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Router from 'next/router';
-// import { StateCreator } from 'zustand';
-
-// import useBoundStore, { State } from '..';
-
-// export interface UserSlice {
-//   logout: () => void;
-// }
-// const createUserSlice: StateCreator<State, [], [], UserSlice> = () => ({
-//   logout: () => {
-//     useBoundStore.persist.clearStorage();
-//     Router.reload();
-//   },
-// });
-
-// export default createUserSlice;
-
-
-// import { createSlice } from '@reduxjs/toolkit'
+import { persistor } from '..';
 
 export const userSlice = createSlice({
   name: "user",
   initialState: {},
   reducers:{
-    addBeet: (state) => {
+    logout: async () => {
+      await persistor.pause();
+      await persistor.flush()
+      await persistor.purge();
       Router.reload();
     },
   }
 })
 
+// Action creators are generated for each case reducer function
+export const { logout } = userSlice.actions
+
+export default userSlice.reducer
