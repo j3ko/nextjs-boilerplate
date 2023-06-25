@@ -1,5 +1,6 @@
+import { wrapper } from '@/store';
 import { RootState } from '@/store/features';
-import { addBear } from '@/store/features/bear';
+import { addBear, fetchNextJson } from '@/store/features/bear';
 import { addBeet } from '@/store/features/beet';
 import { logout } from '@/store/features/user';
 import { Inter } from 'next/font/google';
@@ -8,6 +9,11 @@ import { GiBearFace, GiBeet, GiSpaceship } from 'react-icons/gi';
 import { useSelector, useDispatch } from 'react-redux'
 
 const inter = Inter({ subsets: ['latin'] });
+
+export const getServerSideProps  = wrapper.getServerSideProps(store => async context => {
+  store.dispatch(fetchNextJson())
+  return { props: {} };
+})
 
 export default function Home() {
   const bears = useSelector((state: RootState) => state.bear.count);
@@ -28,7 +34,7 @@ export default function Home() {
       <Button
         className="w-64 rounded-full"
         color="primary"
-        onClick={() => dispatch(addBear())}
+        onClick={() => dispatch(addBear(1))}
         startIcon={<GiBearFace></GiBearFace>}>
         Add Bear
       </Button>

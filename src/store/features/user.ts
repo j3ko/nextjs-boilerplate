@@ -1,4 +1,5 @@
 import { Action, createAction, createSlice } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 import Router from 'next/router';
 import { combineEpics, Epic, ofType } from 'redux-observable';
 import { mergeMap } from 'rxjs/operators';
@@ -14,7 +15,7 @@ export const userSlice = createSlice({
       // Reset your state values if needed
       return state;
     },
-  }
+  },
 })
 
 export const logout = createAction('user/logout'); 
@@ -27,7 +28,7 @@ const logoutEpic: Epic<Action<any>, Action<any>, RootState> = (action$) =>
       await persistor.flush();
       await persistor.purge();
       Router.reload();
-      return logoutSuccess(); // Dispatch an action indicating successful logout
+      return logoutSuccess();
     })
   );
 

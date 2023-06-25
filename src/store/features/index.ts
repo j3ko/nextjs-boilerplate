@@ -1,19 +1,20 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { combineEpics } from 'redux-observable';
-import bearReducer from './bear';
-import beetReducer from './beet';
-import userReducer, { userEpic } from './user';
+import bear, { bearEpic } from './bear';
+import beet from './beet';
+import user, { userEpic } from './user';
 
 export const rootReducer = combineReducers(
   {
-    bear: bearReducer,
-    beet: beetReducer,
-    user: userReducer,
+    bear: bear,
+    beet: beet,
+    user: user,
   }
 );
 
 export const rootEpic = combineEpics(
-  userEpic
+  userEpic,
+  bearEpic
   // add more epics here if needed
 );
 

@@ -1,4 +1,5 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { createWrapper } from 'next-redux-wrapper';
 import { createEpicMiddleware, Epic } from 'redux-observable';
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
@@ -12,7 +13,7 @@ const persistedReducer = persistReducer({
 const epicMiddleware = createEpicMiddleware<any, any, RootState>();
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
   middleware: [...getDefaultMiddleware({
     serializableCheck: {
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
@@ -23,5 +24,6 @@ export const store = configureStore({
 
 epicMiddleware.run(rootEpic as Epic<any, any, RootState, any>);
 
-export const persistor = persistStore(store);
+// export const persistor = persistStore(store);
 export type AppDispatch = typeof store.dispatch
+export const wrapper = createWrapper(() => store);
