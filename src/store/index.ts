@@ -4,7 +4,8 @@ import { createEpicMiddleware, Epic } from 'redux-observable';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { rootEpic, rootReducer, RootState } from './features';
+import { rootEpic } from './epics';
+import { rootReducer, RootState } from './features';
 
 const clientMiddleware = createEpicMiddleware<any, any, RootState>();
 

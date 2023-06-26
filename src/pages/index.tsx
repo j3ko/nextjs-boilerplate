@@ -4,10 +4,11 @@ import { GiBearFace, GiBeet, GiSpaceship } from 'react-icons/gi';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { wrapper } from '@/store';
+import { fetchNextJson } from '@/store/epics/fetchNextJson';
+import { logout } from '@/store/epics/logout';
 import { RootState } from '@/store/features';
-import { addBear, fetchNextJson } from '@/store/features/bear';
+import { addBear } from '@/store/features/bear';
 import { addBeet } from '@/store/features/beet';
-import { logout } from '@/store/features/user';
 
 const inter = Inter({ subsets: ['latin'] });
 

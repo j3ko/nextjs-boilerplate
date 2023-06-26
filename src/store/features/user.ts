@@ -1,10 +1,4 @@
-import { Action, createAction, createSlice } from '@reduxjs/toolkit';
-import Router from 'next/router';
-import { combineEpics, Epic, ofType } from 'redux-observable';
-import { mergeMap } from 'rxjs/operators';
-
-import { persistor } from '..';
-import { RootState } from '.';
+import { createSlice } from '@reduxjs/toolkit';
 
 export const userSlice = createSlice({
   name: 'user',
@@ -17,21 +11,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const logout = createAction('user/logout');
-
-const logoutEpic: Epic<Action<any>, Action<any>, RootState> = (action$) =>
-  action$.pipe(
-    ofType(logout.type),
-    mergeMap(async () => {
-      await persistor.pause();
-      await persistor.flush();
-      await persistor.purge();
-      Router.reload();
-      return logoutSuccess();
-    }),
-  );
-
-export const userEpic = combineEpics(logoutEpic);
 // Action creators are generated for each case reducer function
 export const { logoutSuccess } = userSlice.actions;
 export default userSlice.reducer;
