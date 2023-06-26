@@ -1,15 +1,16 @@
-import { Action, createAction, createSlice } from "@reduxjs/toolkit"
-import { HYDRATE } from "next-redux-wrapper";
-import { combineEpics, Epic, ofType } from "redux-observable";
-import { mergeMap } from "rxjs";
-import { RootState } from ".";
+import { Action, createAction, createSlice } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
+import { combineEpics, Epic, ofType } from 'redux-observable';
+import { mergeMap } from 'rxjs';
+
+import { RootState } from '.';
 
 const bearSlice = createSlice({
-  name: "bear",
+  name: 'bear',
   initialState: {
-    count: 0
+    count: 0,
   },
-  reducers:{
+  reducers: {
     set: (state, action) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
@@ -30,27 +31,26 @@ const bearSlice = createSlice({
       // console.log('HYDRATE', state, action.payload);
       const result = {
         ...state,
-        ...action.payload.bear
+        ...action.payload.bear,
       };
       return result;
     },
   },
-})
-
+});
 
 export const fetchNextJson = createAction('user/fetchNextJson');
 
 const fetchNextJsonEpic: Epic<Action<any>, Action<any>, RootState> = (action$) =>
-action$.pipe(
-  ofType(fetchNextJson.type),
-  mergeMap(async () => {
-    const res = await fetch('https://api.github.com/repos/vercel/next.js')
-    const json = await res.json()
-    return set(json.subscribers_count);
-  })
-);
+  action$.pipe(
+    ofType(fetchNextJson.type),
+    mergeMap(async () => {
+      const res = await fetch('https://api.github.com/repos/vercel/next.js');
+      const json = await res.json();
+      return set(json.subscribers_count);
+    }),
+  );
 
 export const bearEpic = combineEpics(fetchNextJsonEpic);
 // Action creators are generated for each case reducer function
-export const { set, increment } = bearSlice.actions
-export default bearSlice.reducer
+export const { set, increment } = bearSlice.actions;
+export default bearSlice.reducer;

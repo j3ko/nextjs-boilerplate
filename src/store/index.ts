@@ -1,15 +1,19 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 import { createEpicMiddleware, Epic } from 'redux-observable';
-import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
+import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+
 import { rootEpic, rootReducer, RootState } from './features';
 
-const persistedReducer = persistReducer({
-  key: 'root',
-  blacklist: ['bear'],
-  storage,
-}, rootReducer)
+const persistedReducer = persistReducer(
+  {
+    key: 'root',
+    blacklist: ['bear'],
+    storage,
+  },
+  rootReducer,
+);
 
 const clientMiddleware = createEpicMiddleware<any, any, RootState>();
 
@@ -36,4 +40,4 @@ const serverStore = configureStore({
 serverMiddleware.run(rootEpic as Epic<any, any, RootState, any>);
 
 // export type AppDispatch = typeof store.dispatch
-export const wrapper = createWrapper(({ isServer }: any) => isServer ? serverStore : clientStore);
+export const wrapper = createWrapper(({ isServer }: any) => (isServer ? serverStore : clientStore));

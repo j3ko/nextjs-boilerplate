@@ -1,19 +1,20 @@
+import { Inter } from 'next/font/google';
+import { Button, Stats } from 'react-daisyui';
+import { GiBearFace, GiBeet, GiSpaceship } from 'react-icons/gi';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { wrapper } from '@/store';
 import { RootState } from '@/store/features';
 import { fetchNextJson, increment } from '@/store/features/bear';
 import { addBeet } from '@/store/features/beet';
 import { logout } from '@/store/features/user';
-import { Inter } from 'next/font/google';
-import { Button, Stats } from 'react-daisyui';
-import { GiBearFace, GiBeet, GiSpaceship } from 'react-icons/gi';
-import { useSelector, useDispatch } from 'react-redux'
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const getServerSideProps  = wrapper.getServerSideProps(store => async context => {
-  store.dispatch(fetchNextJson())
+export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
+  store.dispatch(fetchNextJson());
   return { props: {} };
-})
+});
 
 export default function Home() {
   const bears = useSelector((state: RootState) => state.bear.count);
