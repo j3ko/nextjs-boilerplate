@@ -1,6 +1,6 @@
 import { wrapper } from '@/store';
 import { RootState } from '@/store/features';
-import { addBear, fetchNextJson } from '@/store/features/bear';
+import { fetchNextJson, increment } from '@/store/features/bear';
 import { addBeet } from '@/store/features/beet';
 import { logout } from '@/store/features/user';
 import { Inter } from 'next/font/google';
@@ -34,7 +34,7 @@ export default function Home() {
       <Button
         className="w-64 rounded-full"
         color="primary"
-        onClick={() => dispatch(addBear(1))}
+        onClick={() => dispatch(increment())}
         startIcon={<GiBearFace></GiBearFace>}>
         Add Bear
       </Button>

@@ -7,23 +7,33 @@ import { rootEpic, rootReducer, RootState } from './features';
 
 const persistedReducer = persistReducer({
   key: 'root',
+  blacklist: ['bear'],
   storage,
 }, rootReducer)
 
-const epicMiddleware = createEpicMiddleware<any, any, RootState>();
+const clientMiddleware = createEpicMiddleware<any, any, RootState>();
 
-export const store = configureStore({
-  reducer: rootReducer,
-  middleware: [...getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-    }
-  }), epicMiddleware],
+const clientStore = configureStore({
+  reducer: persistedReducer,
+  middleware: [clientMiddleware],
   // devTools: process.env.NODE_ENV !== 'production',
 });
 
-epicMiddleware.run(rootEpic as Epic<any, any, RootState, any>);
+(clientStore as any).__persistor = persistStore(clientStore);
 
-// export const persistor = persistStore(store);
-export type AppDispatch = typeof store.dispatch
-export const wrapper = createWrapper(() => store);
+clientMiddleware.run(rootEpic as Epic<any, any, RootState, any>);
+
+export const persistor = persistStore(clientStore);
+
+const serverMiddleware = createEpicMiddleware<any, any, RootState>();
+
+const serverStore = configureStore({
+  reducer: rootReducer,
+  middleware: [serverMiddleware],
+  // devTools: process.env.NODE_ENV !== 'production',
+});
+
+serverMiddleware.run(rootEpic as Epic<any, any, RootState, any>);
+
+// export type AppDispatch = typeof store.dispatch
+export const wrapper = createWrapper(({ isServer }: any) => isServer ? serverStore : clientStore);

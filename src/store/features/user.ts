@@ -4,7 +4,7 @@ import Router from 'next/router';
 import { combineEpics, Epic, ofType } from 'redux-observable';
 import { mergeMap } from 'rxjs/operators';
 import { RootState } from '.';
-import { persistor } from '..';
+// import { persistor } from '..';
 
 
 export const userSlice = createSlice({
@@ -16,6 +16,16 @@ export const userSlice = createSlice({
       return state;
     },
   },
+  // extraReducers: {
+  //   [HYDRATE]: (state, action) => {
+  //     // console.log('HYDRATE', state, action.payload);
+  //     const result = {
+  //       ...state,
+  //       ...action.payload.user
+  //     };
+  //     return result;
+  //   },
+  // },
 })
 
 export const logout = createAction('user/logout'); 
@@ -24,9 +34,9 @@ const logoutEpic: Epic<Action<any>, Action<any>, RootState> = (action$) =>
   action$.pipe(
     ofType(logout.type),
     mergeMap(async () => {
-      await persistor.pause();
-      await persistor.flush();
-      await persistor.purge();
+      // await persistor.pause();
+      // await persistor.flush();
+      // await persistor.purge();
       Router.reload();
       return logoutSuccess();
     })
