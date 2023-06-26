@@ -14,16 +14,6 @@ export const beetSlice = createSlice({
       state.count += 1;
     },
   },
-  // extraReducers: {
-  //   [HYDRATE]: (state, action) => {
-  //     console.log('HYDRATE', state, action.payload);
-  //     const result = {
-  //       ...state,
-  //       ...action.payload.beet
-  //     };
-  //     return result;
-  //   },
-  // },
 });
 
 // Action creators are generated for each case reducer function
