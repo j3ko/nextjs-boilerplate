@@ -11,7 +11,6 @@ const clientMiddleware = createEpicMiddleware<any, any, RootState>();
 const persistedReducer = persistReducer(
   {
     key: 'root',
-    blacklist: ['bear'],
     storage,
   },
   rootReducer,

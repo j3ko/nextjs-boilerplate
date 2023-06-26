@@ -5,12 +5,17 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { wrapper } from '@/store';
 import { RootState } from '@/store/features';
-import { fetchNextJson, increment } from '@/store/features/bear';
+import { addBear, fetchNextJson } from '@/store/features/bear';
 import { addBeet } from '@/store/features/beet';
 import { logout } from '@/store/features/user';
 
 const inter = Inter({ subsets: ['latin'] });
 
+/**
+ * Example: Tell redux to make an api query on the server-side.
+ * Query results are then sent to client when the page loads.
+ * See `fetchNextJson()`
+ */
 export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
   store.dispatch(fetchNextJson());
   return { props: {} };
@@ -35,7 +40,7 @@ export default function Home() {
       <Button
         className="w-64 rounded-full"
         color="primary"
-        onClick={() => dispatch(increment())}
+        onClick={() => dispatch(addBear())}
         startIcon={<GiBearFace></GiBearFace>}>
         Add Bear
       </Button>

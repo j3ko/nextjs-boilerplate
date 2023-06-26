@@ -3,8 +3,8 @@ import Router from 'next/router';
 import { combineEpics, Epic, ofType } from 'redux-observable';
 import { mergeMap } from 'rxjs/operators';
 
-import { RootState } from '.';
 import { persistor } from '..';
+import { RootState } from '.';
 
 export const userSlice = createSlice({
   name: 'user',
