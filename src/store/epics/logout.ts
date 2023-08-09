@@ -9,7 +9,7 @@ import { logoutSuccess } from '../features/user';
 
 export const logout = createAction('user/logout');
 
-export const logoutEpic: Epic<Action<any>, Action<any>, RootState> = (action$) =>
+export const logoutEpic: Epic<Action<unknown>, Action<unknown>, RootState> = (action$) =>
   action$.pipe(
     ofType(logout.type),
     mergeMap(async () => {
