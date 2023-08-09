@@ -1,23 +1,42 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { configureStore } from '@reduxjs/toolkit';
+import { createWrapper } from 'next-redux-wrapper';
+import { createEpicMiddleware, Epic } from 'redux-observable';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-import createBearSlice, { BearSlice } from './features/bearSlice';
-import createBeetSlice, { BeetSlice } from './features/beetSlice';
-import createUserSlice, { UserSlice } from './features/userSlice';
+import { rootEpic } from './epics';
+import { rootReducer, RootState } from './features';
 
-export type State = BearSlice & BeetSlice & UserSlice;
+const clientMiddleware = createEpicMiddleware<any, any, RootState>();
 
-const useBoundStore = create<State>()(
-  persist(
-    (...a) => ({
-      ...createBearSlice(...a),
-      ...createBeetSlice(...a),
-      ...createUserSlice(...a),
-    }),
-    {
-      name: 'app-store',
-    },
-  ),
+const persistedReducer = persistReducer(
+  {
+    key: 'root',
+    storage,
+  },
+  rootReducer,
 );
 
-export default useBoundStore;
+const clientStore = configureStore({
+  reducer: persistedReducer,
+  middleware: [clientMiddleware],
+  // devTools: process.env.NODE_ENV !== 'production',
+});
+
+export const persistor = persistStore(clientStore);
+(clientStore as any).__persistor = persistor;
+
+clientMiddleware.run(rootEpic as Epic<any, any, RootState, any>);
+
+const serverMiddleware = createEpicMiddleware<any, any, RootState>();
+
+const serverStore = configureStore({
+  reducer: rootReducer,
+  middleware: [serverMiddleware],
+  // devTools: process.env.NODE_ENV !== 'production',
+});
+
+serverMiddleware.run(rootEpic as Epic<any, any, RootState, any>);
+
+// export type AppDispatch = typeof store.dispatch
+export const wrapper = createWrapper(({ isServer }: any) => (isServer ? serverStore : clientStore));
