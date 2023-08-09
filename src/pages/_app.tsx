@@ -14,7 +14,7 @@ class PersistGateServer extends React.Component<any> {
 }
 
 const getPersistGate = (): typeof PersistGateServer => {
-  let runtime = process.env.RUNTIME;
+  const runtime = process.env.RUNTIME;
   let PersistGate = PersistGateServer;
   if (runtime === 'browser') {
     PersistGate = PersistGateClient;

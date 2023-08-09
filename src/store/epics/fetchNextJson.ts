@@ -9,7 +9,7 @@ export const fetchNextJson = createAction('user/fetchNextJson');
 /**
  * Perform server-side query
  */
-export const fetchNextJsonEpic: Epic<Action<any>, Action<any>, RootState> = (action$) =>
+export const fetchNextJsonEpic: Epic<Action<unknown>, Action<unknown>, RootState> = (action$) =>
   action$.pipe(
     ofType(fetchNextJson.type),
     mergeMap(async () => {
