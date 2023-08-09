@@ -1,6 +1,6 @@
 This is an opinionated [Next.js](https://nextjs.org/) boilerplate project with the following dependencies:
 
-- [zustand](https://github.com/pmndrs/zustand) (state management)
+- [redux-toolkit](https://github.com/reduxjs/redux-toolkit) (state management)
 - [tailwindcss](https://github.com/tailwindlabs/tailwindcss) (css framework)
 - [daisyui](https://daisyui.com/docs/install/) (css components)
 - [react-daisyui](https://github.com/daisyui/react-daisyui) (react components)
